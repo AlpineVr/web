@@ -1,0 +1,15 @@
+/* Remove any default margins/padding */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* Make the body full viewport height */
+body {
+    /* Replace 'your-gif-url.jpg' with your actual GIF URL */
+    background-image: url('e.gif');
+    background-size: cover;      /* Scale the background image to cover the container */
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    min-height: 100vh;          /* Ensure the body takes up the full viewport height */
+}
