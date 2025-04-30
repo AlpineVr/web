@@ -7,6 +7,18 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-      <iframe width="0" height="0" src="https://www.youtube.com/embed/npjF032TDDQ?autoplay=1&loop=1&playlist=npjF032TDDQ" frameborder="0" allow="autoplay" allowfullscreen></iframe>
+    <iframe width="0" height="0" src="https://www.youtube.com/embed/npjF032TDDQ?autoplay=1&loop=1&playlist=npjF032TDDQ" frameborder="0" allow="autoplay" allowfullscreen></iframe>
+    <!-- Button to unmute -->
+    <button id="unmuteBtn">Unmute Audio</button>
+    
+    <script>
+        const iframe = document.querySelector('iframe');
+        const unmuteBtn = document.getElementById('unmuteBtn');
+    
+        unmuteBtn.addEventListener('click', () => {
+          // Post message to YouTube iframe to unmute
+          iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+        });
+    </script>
 </body>
 </html>
