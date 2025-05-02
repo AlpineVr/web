@@ -38,22 +38,17 @@
     </style>
 </head>
 <body>
-    <div class="iframe-container">
-        <!-- Replace src with actual URL once verified -->
-        <iframe id="demoFrame" src="" frameborder="0"></iframe>
-        <div class="loading-overlay">Loading...</div>
-    </div>
-
-    <script>
-        const iframe = document.getElementById('demoFrame');
-        const loadingOverlay = document.querySelector('.loading-overlay');
-
-        iframe.addEventListener('load', () => {
-            loadingOverlay.style.display = 'none';
-        });
-
-        // Set the source URL here
-        iframe.src = 'https://yujiandemo.com/';
-    </script>
+    <iframe 
+        allowtransparency="true"
+        webkitallowfullscreen="true"
+        mozallowfullscreen="true"
+        msallowfullscreen="true"
+        src="https://yujiandemo.com/"
+        allow="autoplay; fullscreen *; geolocation; microphone; camera; midi; monetization; xr-spatial-tracking; gamepad; gyroscope; accelerometer; xr; cross-origin-isolated; web-share"
+        id="game_drop"
+        allowfullscreen="true"
+        scrolling="no"
+        frameborder="0"
+    ></iframe>
 </body>
 </html>
