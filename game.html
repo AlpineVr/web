@@ -13,54 +13,36 @@
 </head>
 <body>
     <div class="game-container">
-        <!-- Proxy iframe -->
         <iframe id="proxyFrame"
-                src=""
-                frameborder="0"
-                width="100%"
-                height="100%">
-        </iframe>
+            src=""
+            frameborder="0"
+            width="100%"
+            height="100%"></iframe>
     </div>
-
     <script>
-        // Configuration
-        const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+        const proxyUrl = 'https://api.allorigins.win/raw?url=';
         const targetGameUrl = 'https://yujiandemo.com/';
         
-        // Create proxied URL
-        const proxiedUrl = `${proxyUrl}${targetGameUrl}`;
-        
-        // Set up request headers
         async function setupProxy() {
             try {
-                // Test connection first
-                const testResponse = await fetch(proxyUrl, {
-                    method: 'OPTIONS',
-                    headers: {
-                        'Origin': window.location.origin,
-                        'Access-Control-Request-Headers': 'origin,x-requested-with',
-                        'Access-Control-Request-Method': 'GET'
-                    }
-                });
+                const proxiedUrl = proxyUrl + encodeURIComponent(targetGameUrl);
                 
+                // Verify proxy availability
+                const testResponse = await fetch(proxiedUrl);
                 if (!testResponse.ok) {
-                    throw new Error(`Proxy connection failed: ${testResponse.statusText}`);
+                    throw new Error(`Proxy unavailable: ${testResponse.statusText}`);
                 }
                 
-                // Set iframe source after successful test
                 document.getElementById('proxyFrame').src = proxiedUrl;
-                
             } catch (error) {
                 console.error('Proxy setup failed:', error);
                 document.getElementById('proxyFrame').innerHTML = `
                     <div style="padding: 20px; color: red;">
                         Failed to load game. Please check your browser console for details.
-                    </div>
-                `;
+                    </div>`;
             }
         }
         
-        // Initialize when page loads
         window.addEventListener('load', setupProxy);
     </script>
 </body>
