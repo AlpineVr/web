@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <title>Yujiandemo Game Embed</title>
     <style>
         .game-container {
             width: 100%;
@@ -11,26 +13,55 @@
 </head>
 <body>
     <div class="game-container">
-        <!-- Our proxy iframe will go here -->
-        <iframe id="proxyFrame" 
-                src="" 
+        <!-- Proxy iframe -->
+        <iframe id="proxyFrame"
+                src=""
                 frameborder="0"
-                width="100%" 
+                width="100%"
                 height="100%">
         </iframe>
     </div>
 
     <script>
+        // Configuration
         const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
         const targetGameUrl = 'https://yujiandemo.com/';
         
-        // Create proxy URL
+        // Create proxied URL
         const proxiedUrl = `${proxyUrl}${targetGameUrl}`;
         
-        // Set iframe src after a small delay to avoid detection
-        setTimeout(() => {
-            document.getElementById('proxyFrame').src = proxiedUrl;
-        }, 100);
+        // Set up request headers
+        async function setupProxy() {
+            try {
+                // Test connection first
+                const testResponse = await fetch(proxyUrl, {
+                    method: 'OPTIONS',
+                    headers: {
+                        'Origin': window.location.origin,
+                        'Access-Control-Request-Headers': 'origin,x-requested-with',
+                        'Access-Control-Request-Method': 'GET'
+                    }
+                });
+                
+                if (!testResponse.ok) {
+                    throw new Error(`Proxy connection failed: ${testResponse.statusText}`);
+                }
+                
+                // Set iframe source after successful test
+                document.getElementById('proxyFrame').src = proxiedUrl;
+                
+            } catch (error) {
+                console.error('Proxy setup failed:', error);
+                document.getElementById('proxyFrame').innerHTML = `
+                    <div style="padding: 20px; color: red;">
+                        Failed to load game. Please check your browser console for details.
+                    </div>
+                `;
+            }
+        }
+        
+        // Initialize when page loads
+        window.addEventListener('load', setupProxy);
     </script>
 </body>
 </html>
